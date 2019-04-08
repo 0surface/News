@@ -1,4 +1,4 @@
-﻿@model News.Models.WebsiteVM
+﻿@model News.Models.WebsiteListVM
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,19 +7,28 @@
     <h1>News Headlines</h1>
     <div class="col-md-12">
         <div class="col-md-12">
+            <div>
+                           
+            </div>
             <h4>
-                Click  :
-                <span id="clickCount" data-bind="text : getActiveSite()"></span>
-                <br />
-                Message :
-                <span id="msg" data-bind="text : getSiteCount()"></span>
+                Click  On the Website 
             </h4>
-
-            <button class="btn btn-primary" onclick="getWebData(`The Sun`)">Get Data</button>
+            <div id="websites">
+                <img id="spinner" src="~/images/loading.gif" style="display:none;" />
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    <img src="@Model.Items[i].LogoImageUrl.ToString()"
+                         alt="@Model.Items[i].Name.ToString()"
+                         class="img-fluid rounded float-left"
+                         id="image_@i"
+                         style="width:150px;height:50px"
+                         onclick="getWebData('@Model.Items[i].Name.ToString()')" />
+                }
+            </div>
+             <br/><br />
         </div>
         <hr />
-        <div id="treeArea" class="treeArea col-md-12">
-            <h4>Tree area</h4>
+        <div id="treeArea" class="treeArea col-md-12">            
         </div>
     </div>
 </div>
@@ -77,6 +86,8 @@
                 websiteName = "BBC";
             }
             var data = { name: websiteName };
+
+            showSpinner(true);
             $.ajax({
                 url: "Home/GetHeadlines",
                 type: "POST",
@@ -90,9 +101,17 @@
                     root.y0 = 0;
                     update(root);
                     console.log(`treedata : ${treeData}`);
+                    showSpinner(false);
                 },
-                error: (err) => { console.log(`Error ajax getWebData : ${err}`) }
+                error: (err) => {
+                    showSpinner(false);
+                    console.log(`Error ajax getWebData : ${err}`)
+                }
             });
+        }
+
+        function showSpinner(state) {
+            state ? $("#spinner").show() : $("#spinner").hide();
         }
 
     function update(source) {

@@ -7,6 +7,7 @@ namespace News.Service
         public int Id { get; set; }
         public string Name { get; set; }
         public string CanonicalUrl { get; set; }
+        public string LogoImageUrl { get; set; }
         public string HeadLineSelector { get; set; }
         public List<string> SubUrls { get; set; }
     }

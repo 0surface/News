@@ -13,6 +13,7 @@ namespace News.Service.Service
                 Id = 1,
                 Name = "BBC",
                 CanonicalUrl = "https://www.bbc.co.uk/",
+                LogoImageUrl ="/images/bbc.png",
                 HeadLineSelector = "//span[@class='top-story__title']"
             });
 
@@ -21,6 +22,7 @@ namespace News.Service.Service
                 Id = 2,
                 Name = "The Sun",
                 CanonicalUrl = "https://www.thesun.co.uk/",
+                LogoImageUrl = "/images/thesun.png",
                 HeadLineSelector = "//p[@class='teaser__subdeck']"
             });
 

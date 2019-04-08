@@ -24,7 +24,9 @@ namespace News.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            WebsiteListVM vm = new WebsiteListVM();
+            vm.Items = GetMockWebsiteList();
+            return View(vm);
         }
 
         public IActionResult GetHeadlines(string name)
