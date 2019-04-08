@@ -1,6 +1,6 @@
 ﻿namespace News.Models
 {
-    public class Headline
+    public class HeadlineVM
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -27,6 +27,10 @@ namespace News
         {
             services.AddScoped<IScraper, Scraper>();
 
+            AutoMapper.Mapper.Initialize(cfg => {                
+                cfg.AddProfile<WebModelMappings>();
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

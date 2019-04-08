@@ -6,6 +6,6 @@ namespace News.Service.Service
 {
     public interface IScraper
     {
-        string GetHeadlines(string url);
+        string GetHeadlines(WebsiteDto dto);
     }
 }

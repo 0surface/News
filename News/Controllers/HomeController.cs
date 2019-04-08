@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using News.Models;
+using News.Service;
 using News.Service.Service;
 
 namespace News.Controllers
@@ -24,28 +26,26 @@ namespace News.Controllers
         }
 
         public IActionResult GetHeadlines(string website)
-        {
-            string result = _scraper.GetHeadlines(website);
+        {            
+            string result = _scraper.GetHeadlines(Mapper.Map<WebsiteDto>(Websites()["BBC"]));
             return Content(result);
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        private Dictionary<string, WebsiteVM> Websites()
+        {
+            Dictionary<string, WebsiteVM> dict = new Dictionary<string, WebsiteVM>();
+            dict.Add("BBC", new WebsiteVM() {
+                Id = 1,
+                Name = "BBC",
+                CanonicalUrl = "https://www.bbc.co.uk/",
+                HeadLineSelector = "//span[@class='top-story__title']"
+            });
+            return dict;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
