@@ -24,24 +24,6 @@ namespace News.Service.Service
             return JsonConvert.SerializeObject(result);
         }
 
-        private async void GetWebSite(string url)
-        {
-            var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(url);
-            var htmlDocument = new HtmlDocument();
-             htmlDocument.LoadHtml(html);
-
-            var x1 = htmlDocument.DocumentNode.Descendants("div");
-
-            var x2 = htmlDocument.DocumentNode.Descendants("div")
-                .Where(node => node.GetAttributeValue("href", "").Contains("http"))
-                .ToList();
-
-            var storyHtml = htmlDocument.DocumentNode.Descendants("div")
-                .Where(node => node.GetAttributeValue("class", "").Equals("top-story__wrapper"))
-                .ToList();
-
-        }
 
         /// <summary>
         /// 
@@ -55,14 +37,27 @@ namespace News.Service.Service
             List<Node> nodes = new List<Node>();
             HtmlDocument doc = web.Load(url);
 
+            var headlineNodes = doc.DocumentNode
+                  .SelectNodes("//div[contains(@class,'top-story__wrapper')]");
+
+            foreach (var node in headlineNodes)
+            {
+                var titles = node.SelectNodes(headlineSelector)
+                .Select(x => x.InnerText)
+                .ToList();
+            }
+
             var headerNames = doc.DocumentNode
                 .SelectNodes(headlineSelector)
-                .Select(node => node.InnerText)
+                .Select(node => node.InnerText.Replace("&#x27;", "'"))
                 .ToList();
 
+            int limit = 0;
             foreach (var header in headerNames)
             {
+                if (limit > 10) return nodes;
                 nodes.Add(new Node(header, ""));
+                limit++;
             }
 
             return nodes;
