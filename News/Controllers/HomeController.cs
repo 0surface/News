@@ -26,7 +26,7 @@ namespace News.Controllers
         public IActionResult GetHeadlines(string website)
         {
             string result = _scraper.GetHeadlines(website);
-            return Json(result);
+            return Content(result);
         }
 
         public IActionResult About()

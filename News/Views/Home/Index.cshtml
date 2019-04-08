@@ -14,49 +14,59 @@
                 <span id="clickCount" data-bind="text : getActiveSite()"></span>
                 <br />
                 Message :
-                <span id="msg" data-bind="text : getSiteCount()"></span>
-               
+                <span id="msg" data-bind="text : getSiteCount()"></span>               
             </h4>
+            <button class="btn btn-primary" onclick="getWebData()" >Get Data</button>
         </div>
     </div>
 </div>
 
     <script>
         $(function () {
-            doStuff();
+           // doStuff();
         });
 
         function doStuff (){
             console.log("do stuff");
         }
+        //var treeData = [
+        //    {
+        //        "name": "Website",
+        //        "parent": "null",
+        //        "children": []
+        //    }
+        //];
+
+               
 
         var treeData = [
    {
-            "name": "Top Level",
+        "name": "Top Level",
         "parent": "null",
-        "children": [
-       {
-            "name": "Level 2: A",
-        "parent": "Top Level",
-        "children": [
-           {
-            "name": "Son of A",
-        "parent": "Level 2: A"
-      },
-           {
-            "name": "Daughter of A",
-        "parent": "Level 2: A"
-      }
-    ]
-  },
-       {
-            "name": "Level 2: B",
-        "parent": "Top Level"
-      }
-    ]
-  }
+                "children": [
+                   {
+                    "name": "Level 2: A",
+                    "parent": "Top Level",
+                    "children": [
+                           {
+                                "name": "Son of A",
+                                "parent": "Level 2: A"
+                            },
+                            {
+                                "name": "Daughter of A",
+                                "parent": "Level 2: A"
+                            }
+                        ]
+                    },
+                   {
+                        "name": "Level 2: B",
+                    "parent": "Top Level"
+                  }
+                ]
+              }
 ];
-
+        console.log("org tree data");
+        console.dir(treeData); 
 
 // ************** Generate the tree diagram	 *****************
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
@@ -87,6 +97,24 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
 
     d3.select(self.frameElement).style("height", "500px");
 
+        function getWebData() {
+            $.ajax({
+                url: "Home/GetHeadlines",
+                type: "POST",
+                data: "bbc",
+                success: (data) => {
+                    console.dir(data);
+                    console.log("success ajax getWebData");
+                    treeData = JSON.parse(data);
+                    root = treeData[0];
+                    root.x0 = height / 2;
+                    root.y0 = 0;
+                    update(root);
+                    console.log(`treedata : ${treeData}`);
+                },
+                error: (err) => { console.log(`Error ajax getWebData : ${err}`) }
+            });
+        }
 function update(source) {
 
   // Compute the new tree layout.
@@ -175,7 +203,9 @@ function update(source) {
     }
 
     // Toggle children on click.
-function click(d) {
+        function click(d) {
+            console.log(`d in update`);
+            console.dir(d);
   if (d.children) {
             d._children = d.children;
         d.children = null;
