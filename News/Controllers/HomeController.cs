@@ -5,14 +5,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using News.Models;
+using News.Service.Service;
 
 namespace News.Controllers
 {
     public class HomeController : Controller
     {
+        private IScraper _scraper;
+
+        public HomeController(IScraper scraper)
+        {
+            _scraper = scraper;
+        }
+
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult GetHeadlines(string website)
+        {
+            string result = _scraper.GetHeadlines(website);
+            return Json(result);
         }
 
         public IActionResult About()
