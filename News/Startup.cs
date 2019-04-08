@@ -26,6 +26,7 @@ namespace News
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IScraper, Scraper>();
+            services.AddScoped<IWebsiteService, WebsiteService>();
 
             AutoMapper.Mapper.Initialize(cfg => {                
                 cfg.AddProfile<WebModelMappings>();

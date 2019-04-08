@@ -13,11 +13,13 @@ namespace News.Controllers
 {
     public class HomeController : Controller
     {
+        private IWebsiteService _webSiteService;
         private IScraper _scraper;
 
-        public HomeController(IScraper scraper)
+        public HomeController(IScraper scraper, IWebsiteService webSiteService)
         {
             _scraper = scraper;
+            _webSiteService = webSiteService;
         }
 
         public IActionResult Index()
@@ -25,27 +27,37 @@ namespace News.Controllers
             return View();
         }
 
-        public IActionResult GetHeadlines(string website)
-        {            
-            string result = _scraper.GetHeadlines(Mapper.Map<WebsiteDto>(Websites()["BBC"]));
-            return Content(result);
-        }
-
-        public IActionResult Privacy()
+        public IActionResult GetHeadlines(string name)
         {
-            return View();
+            WebsiteVM selected = Websites()[name];
+            if (selected != null)
+            {
+                string result = _scraper.GetHeadlines(Mapper.Map<WebsiteDto>(selected));
+                return Content(result);
+            }
+            else
+            {
+                return StatusCode(404);
+            }           
         }
 
         private Dictionary<string, WebsiteVM> Websites()
         {
             Dictionary<string, WebsiteVM> dict = new Dictionary<string, WebsiteVM>();
-            dict.Add("BBC", new WebsiteVM() {
-                Id = 1,
-                Name = "BBC",
-                CanonicalUrl = "https://www.bbc.co.uk/",
-                HeadLineSelector = "//span[@class='top-story__title']"
-            });
+
+            try
+            {
+                List<WebsiteVM> webSites = GetMockWebsiteList();
+
+                webSites.ForEach(w => dict.Add(w.Name, w));
+            }
+            catch (Exception) { }
             return dict;
+        }
+
+        private List<WebsiteVM> GetMockWebsiteList()
+        {
+            return Mapper.Map<List<WebsiteVM>>(_webSiteService.GetAllWebSites());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

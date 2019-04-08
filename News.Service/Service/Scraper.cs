@@ -35,17 +35,7 @@ namespace News.Service.Service
         {
             HtmlWeb web = new HtmlWeb();
             List<Node> nodes = new List<Node>();
-            HtmlDocument doc = web.Load(url);
-
-            var headlineNodes = doc.DocumentNode
-                  .SelectNodes("//div[contains(@class,'top-story__wrapper')]");
-
-            foreach (var node in headlineNodes)
-            {
-                var titles = node.SelectNodes(headlineSelector)
-                .Select(x => x.InnerText)
-                .ToList();
-            }
+            HtmlDocument doc = web.Load(url);                       
 
             var headerNames = doc.DocumentNode
                 .SelectNodes(headlineSelector)

@@ -1,22 +1,25 @@
-﻿@{
+﻿@model News.Models.WebsiteVM
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="container">
     <h1>News Headlines</h1>
     <div class="col-md-12">
-        <div id="treeArea" class="treeArea col-md-8">
-            <h4>Tree area</h4>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-12">
             <h4>
                 Click  :
                 <span id="clickCount" data-bind="text : getActiveSite()"></span>
                 <br />
                 Message :
-                <span id="msg" data-bind="text : getSiteCount()"></span>               
+                <span id="msg" data-bind="text : getSiteCount()"></span>
             </h4>
-            <button class="btn btn-primary" onclick="getWebData()" >Get Data</button>
+
+            <button class="btn btn-primary" onclick="getWebData(`The Sun`)">Get Data</button>
+        </div>
+        <hr />
+        <div id="treeArea" class="treeArea col-md-12">
+            <h4>Tree area</h4>
         </div>
     </div>
 </div>
@@ -29,47 +32,19 @@
         function doStuff (){
             console.log("do stuff");
         }
-        //var treeData = [
-        //    {
-        //        "name": "Website",
-        //        "parent": "null",
-        //        "children": []
-        //    }
-        //];
-
-               
-
         var treeData = [
-   {
-        "name": "Top Level",
-        "parent": "null",
-                "children": [
-                   {
-                    "name": "Level 2: A",
-                    "parent": "Top Level",
-                    "children": [
-                           {
-                                "name": "Son of A",
-                                "parent": "Level 2: A"
-                            },
-                            {
-                                "name": "Daughter of A",
-                                "parent": "Level 2: A"
-                            }
-                        ]
-                    },
-                   {
-                        "name": "Level 2: B",
-                    "parent": "Top Level"
-                  }
-                ]
-              }
-];
+            {
+                "name": "Website",
+                "parent": "null",
+                "children": []
+            }
+        ];  
+       
         console.log("org tree data");
         console.dir(treeData); 
 
 // ************** Generate the tree diagram	 *****************
-var margin = {top: 20, right: 120, bottom: 20, left: 120},
+        var margin = {top: 20, right: 120, bottom: 20, left: 120},
             width = 960 - margin.right - margin.left,
             height = 500 - margin.top - margin.bottom;
 
@@ -97,11 +72,15 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
 
     d3.select(self.frameElement).style("height", "500px");
 
-        function getWebData() {
+        function getWebData(websiteName) {
+            if (websiteName === '') {
+                websiteName = "BBC";
+            }
+            var data = { name: websiteName };
             $.ajax({
                 url: "Home/GetHeadlines",
                 type: "POST",
-                data: "bbc",
+                data: data,
                 success: (data) => {
                     console.dir(data);
                     console.log("success ajax getWebData");
@@ -115,7 +94,8 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
                 error: (err) => { console.log(`Error ajax getWebData : ${err}`) }
             });
         }
-function update(source) {
+
+    function update(source) {
 
   // Compute the new tree layout.
   var nodes = tree.nodes(root).reverse(),
@@ -202,18 +182,16 @@ function update(source) {
       });
     }
 
-    // Toggle children on click.
-        function click(d) {
-            console.log(`d in update`);
-            console.dir(d);
-  if (d.children) {
+    /// Toggles children of d3 Tree on click.
+    function click(d) {
+        if (d.children) {
             d._children = d.children;
-        d.children = null;
-  } else {
+            d.children = null;
+        } else {
             d.children = d._children;
-        d._children = null;
-      }
-      update(d);
+            d._children = null;
+        }
+        update(d);
     }
 
 </script>
