@@ -13,4 +13,9 @@
     <ProjectReference Include="..\News.Service\News.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\css\" />
+    <Folder Include="wwwroot\lib\js\" />
+  </ItemGroup>
+
 </Project>

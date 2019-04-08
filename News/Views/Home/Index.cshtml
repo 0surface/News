@@ -5,7 +5,7 @@
 <div class="container">
     <h1>News Headlines</h1>
     <div class="col-md-12">
-        <div class="col-md-8">
+        <div id="treeArea" class="treeArea col-md-8">
             <h4>Tree area</h4>
         </div>
         <div class="col-md-4">
@@ -15,24 +15,20 @@
                 <br />
                 Message :
                 <span id="msg" data-bind="text : getSiteCount()"></span>
-
-                <br />
-                <div data-bind="foreach : websiteList">
-                    <img data-bind=" attr :{src : getImageUrl()}, click: $parent.getSiteCount()" />
-                    <br />
-                    Name :
-                    <span id="websiteName" data-bind="text : getName()"></span>
-                    <br />
-                </div>
+               
             </h4>
         </div>
     </div>
 </div>
-<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
     <script>
         $(function () {
-            console.log("on load");
+            doStuff();
         });
+
+        function doStuff (){
+            console.log("do stuff");
+        }
 
         var treeData = [
    {
@@ -77,7 +73,7 @@ var margin = {top: 20, right: 120, bottom: 20, left: 120},
         var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
 
-    var svg = d3.select("body").append("svg")
+        var svg = d3.select("body").append("svg")
         .attr("width", width + margin.right + margin.left)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
