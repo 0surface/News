@@ -14,14 +14,9 @@ var UtilHelper;
         ajaxPost.run();
     }
     UtilHelper.AjaxPostwithCallback = AjaxPostwithCallback;
-    function test() {
-        var x = new D3treeHelper.Test();
-        x.testLog();
-    }
-    UtilHelper.test = test;
     function treeMaker(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height) {
-        var d3tree = new D3treeHelper.D3Tree(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height);
-        d3tree.generateTreeDiagram(treeData);
+        return new D3treeHelper.D3Tree();
+        //return new D3treeHelper.D3Tree(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height); 
     }
     UtilHelper.treeMaker = treeMaker;
 })(UtilHelper || (UtilHelper = {}));

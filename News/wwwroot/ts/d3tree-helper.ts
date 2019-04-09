@@ -23,34 +23,36 @@ module D3treeHelper {
         width = 960 - this.marigin.right - this.marigin.left;
         height = 500 - this.marigin.top - this.marigin.bottom;
 
-        constructor(treeData: Array<Object>,
-            tree: any,
-            diagonal: any,
-            svg: any,
-            i: number,
-            duration: number,
-            root: any,    
-            frameElement : Object,
-            width: number,
-            height: number
-           )
-        {
-            this.treeData = treeData;
-            this.tree = tree;
-            this.diagonal = diagonal;
-            this.svg = svg;
-            this.i = i;
-            this.duration = duration;
-            this.root = root;
-            this.frameElement = frameElement;
-            this.width = width;
-            this.height = height;
+        //constructor(
+        //    treeData: Array<Object>,
+        //    tree: any,
+        //    diagonal: any,
+        //    svg: any,
+        //    i: number,
+        //    duration: number,
+        //    root: any,    
+        //    frameElement : Object,
+        //    width: number,
+        //    height: number
+        //   )
+        //{
+        //    this.treeData = treeData;
+        //    this.tree = tree;
+        //    this.diagonal = diagonal;
+        //    this.svg = svg;
+        //    this.i = i;
+        //    this.duration = duration;
+        //    this.root = root;
+        //    this.frameElement = frameElement;
+        //    this.width = width;
+        //    this.height = height;
+        //}
+        constructor(  ) {
+            
         }
 
-       generateTreeDiagram(treeData : Object) {
-
-        var self = this;
-          
+       generateTreeDiagram() {
+           var self = this;
         self.marigin = { top: 20, right: 120, bottom: 20, left: 120 },
         self.width = 960 - self.marigin.right - self.marigin.left,
         self.height = 500 - self.marigin.top - self.marigin.bottom;
@@ -77,12 +79,19 @@ module D3treeHelper {
         d3.select(self.frameElement).style("height", "500px");
         }
 
+       ///Updates the d3 tree diagram with data and redraws diagram.
        update(source) {
             var self = this;
+           //console.dir(this.tree);
+           //console.dir(this.tree(this.root));
+           //console.dir(self.root);
 
-        // Compute the new tree layout.
-            var nodes = self.tree.nodes(self.root).reverse(),
-            links = self.tree.links(nodes);
+           // Compute the new tree layout.
+           //var xtree = self.tree;
+           //console.dir(this.tree.nodes(this.root));
+           var nodes = this.tree.nodes(this.root).reverse();
+           //var nodes = tree.nodes(root).reverse(),
+            var links = self.tree.links(nodes);
 
         // Normalize for fixed-depth.
         nodes.forEach(function (d) { d.y = d.depth * 180; });
@@ -165,7 +174,9 @@ module D3treeHelper {
         });
         }
 
-       click(d) {
+       /// Toggles children of d3 Tree when a tree node is clicked event
+       click = (d) :void => {
+            var self = this;
             if (d.children) {
                 d._children = d.children;
                 d.children = null;
@@ -175,10 +186,5 @@ module D3treeHelper {
             }
             this.update(d);
         }
-    }
-    export class Test {
-        testLog() {
-            console.log("test");
-        }
-    }
+    }   
 }

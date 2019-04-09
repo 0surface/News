@@ -13,12 +13,7 @@ module UtilHelper {
         ajaxPost.failCallback = failfn;
         ajaxPost.run();
     }
-
-    export function test() {
-        var x = new D3treeHelper.Test();
-            x.testLog();
-    }
-
+    
     export function treeMaker(treeData: Array<Object>,
         tree: any,
         diagonal: any,
@@ -30,7 +25,7 @@ module UtilHelper {
         width: number,
         height: number) {
 
-        let d3tree = new D3treeHelper.D3Tree(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height);        
-        d3tree.generateTreeDiagram(treeData);
+        return new D3treeHelper.D3Tree(); 
+        //return new D3treeHelper.D3Tree(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height); 
     }
 }

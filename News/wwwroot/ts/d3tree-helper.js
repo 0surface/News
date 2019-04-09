@@ -2,7 +2,32 @@
 var D3treeHelper;
 (function (D3treeHelper) {
     var D3Tree = /** @class */ (function () {
-        function D3Tree(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height) {
+        //constructor(
+        //    treeData: Array<Object>,
+        //    tree: any,
+        //    diagonal: any,
+        //    svg: any,
+        //    i: number,
+        //    duration: number,
+        //    root: any,    
+        //    frameElement : Object,
+        //    width: number,
+        //    height: number
+        //   )
+        //{
+        //    this.treeData = treeData;
+        //    this.tree = tree;
+        //    this.diagonal = diagonal;
+        //    this.svg = svg;
+        //    this.i = i;
+        //    this.duration = duration;
+        //    this.root = root;
+        //    this.frameElement = frameElement;
+        //    this.width = width;
+        //    this.height = height;
+        //}
+        function D3Tree() {
+            var _this = this;
             this.treeData = [
                 {
                     "name": "Website",
@@ -15,18 +40,21 @@ var D3treeHelper;
             this.marigin = { top: 20, right: 120, bottom: 20, left: 120 };
             this.width = 960 - this.marigin.right - this.marigin.left;
             this.height = 500 - this.marigin.top - this.marigin.bottom;
-            this.treeData = treeData;
-            this.tree = tree;
-            this.diagonal = diagonal;
-            this.svg = svg;
-            this.i = i;
-            this.duration = duration;
-            this.root = root;
-            this.frameElement = frameElement;
-            this.width = width;
-            this.height = height;
+            /// Toggles children of d3 Tree when a tree node is clicked event
+            this.click = function (d) {
+                var self = _this;
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                }
+                else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                _this.update(d);
+            };
         }
-        D3Tree.prototype.generateTreeDiagram = function (treeData) {
+        D3Tree.prototype.generateTreeDiagram = function () {
             var self = this;
             self.marigin = { top: 20, right: 120, bottom: 20, left: 120 },
                 self.width = 960 - self.marigin.right - self.marigin.left,
@@ -46,10 +74,18 @@ var D3treeHelper;
             this.update(self.root);
             d3.select(self.frameElement).style("height", "500px");
         };
+        ///Updates the d3 tree diagram with data and redraws diagram.
         D3Tree.prototype.update = function (source) {
             var self = this;
+            //console.dir(this.tree);
+            //console.dir(this.tree(this.root));
+            //console.dir(self.root);
             // Compute the new tree layout.
-            var nodes = self.tree.nodes(self.root).reverse(), links = self.tree.links(nodes);
+            //var xtree = self.tree;
+            //console.dir(this.tree.nodes(this.root));
+            var nodes = this.tree.nodes(this.root).reverse();
+            //var nodes = tree.nodes(root).reverse(),
+            var links = self.tree.links(nodes);
             // Normalize for fixed-depth.
             nodes.forEach(function (d) { d.y = d.depth * 180; });
             // Update the nodes…
@@ -115,27 +151,7 @@ var D3treeHelper;
                 d.y0 = d.y;
             });
         };
-        D3Tree.prototype.click = function (d) {
-            if (d.children) {
-                d._children = d.children;
-                d.children = null;
-            }
-            else {
-                d.children = d._children;
-                d._children = null;
-            }
-            this.update(d);
-        };
         return D3Tree;
     }());
     D3treeHelper.D3Tree = D3Tree;
-    var Test = /** @class */ (function () {
-        function Test() {
-        }
-        Test.prototype.testLog = function () {
-            console.log("test");
-        };
-        return Test;
-    }());
-    D3treeHelper.Test = Test;
 })(D3treeHelper || (D3treeHelper = {}));
