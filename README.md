@@ -1,6 +1,6 @@
 
 
-# Applicaiton
+# About
 A simple sp.Net Core 2.0 Demo Web Application.
 
 The page gets Live news headlines from the selected News Website and displays
@@ -30,4 +30,3 @@ http://justheadlines.azurewebsites.net/
 
 # Author
 SEIFU TOLOSA aka 0surface
-
