@@ -37,6 +37,7 @@
    
     /*Global variables*/
     var showLogs = false;
+    
     var treeData =  [
         {
             "name": "Website",
@@ -54,15 +55,17 @@
     var margin = { top: 20, right: 120, bottom: 20, left: 120 },
         width = 960 - margin.right - margin.left,
         height = 500 - margin.top - margin.bottom;
+    UtilHelper.test();
+    var d3Maker = UtilHelper.treeMaker(treeData, tree, diagonal, svg,i,duration,root, margin, width, height);
     /*End of Global variables*/
 
 
     $(function () {
         getWebData("BBC");
-        generateTreeDiagram(treeData);
+        d3Maker.generateTreeDiagram(treeData);
     });
 
-    function generateTreeDiagram(treeData) {
+    function _generateTreeDiagram(treeData) {
         // ************** Generate the tree diagram	 *****************
         var margin = { top: 20, right: 120, bottom: 20, left: 120 },
             width = 960 - margin.right - margin.left,
@@ -123,12 +126,14 @@
             getWebData_successCallback,
             getWebData_failCallback )
     }
+
+   
     
     ///Toggles the visibility of the spinner gif container
     showSpinner = (state) => { state ? $("#spinner").show() : $("#spinner").hide(); }
         
     ///Updates the d3 tree diagram with data and redraws diagram.
-    function update(source) {
+    function _update(source) {
 
         // Compute the new tree layout.
         var nodes = tree.nodes(root).reverse(),
@@ -216,7 +221,7 @@
     }
 
     /// Toggles children of d3 Tree on click.
-    function click(d) {
+    function _click(d) {
         if (d.children) {
             d._children = d.children;
             d.children = null;

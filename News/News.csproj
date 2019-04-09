@@ -7,9 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\ts\d3tree-helper.ts" />
     <Content Remove="wwwroot\ts\news-helper.ts" />
     <Content Remove="wwwroot\ts\news-helper.ts~RF2df36d8f.TMP" />
     <Content Remove="wwwroot\ts\util-helper.ts" />
+    <Content Remove="wwwroot\ts\util-helper.ts~RF2e0b539a.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\ts\d3tree-helper.ts" />
     <TypeScriptCompile Include="wwwroot\ts\news-helper.ts" />
     <TypeScriptCompile Include="wwwroot\ts\util-helper.ts" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 /// <reference path="news-helper.ts" />
+/// <reference path="d3tree-helper.ts" />
 var UtilHelper;
 (function (UtilHelper) {
     function log(showMessage, message) {
@@ -13,4 +14,14 @@ var UtilHelper;
         ajaxPost.run();
     }
     UtilHelper.AjaxPostwithCallback = AjaxPostwithCallback;
+    function test() {
+        var x = new D3treeHelper.Test();
+        x.testLog();
+    }
+    UtilHelper.test = test;
+    function treeMaker(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height) {
+        var d3tree = new D3treeHelper.D3Tree(treeData, tree, diagonal, svg, i, duration, root, frameElement, width, height);
+        d3tree.generateTreeDiagram(treeData);
+    }
+    UtilHelper.treeMaker = treeMaker;
 })(UtilHelper || (UtilHelper = {}));
