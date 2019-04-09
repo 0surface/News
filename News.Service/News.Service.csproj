@@ -5,14 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="DTO\WebsiteDto.cs~RF28bc82f9.TMP" />
     <None Remove="Service\Scraper.cs~RF27b81636.TMP" />
+    <None Remove="Service\Scraper\IScraper.cs~RF2955f3eb.TMP" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.2" />
     <PackageReference Include="OpenScraping" Version="1.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\News.Types\News.Types.csproj" />
+    <ProjectReference Include="..\News.Util\News.Util.csproj" />
   </ItemGroup>
 
   <ItemGroup>

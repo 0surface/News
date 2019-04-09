@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using News.Types.Website;
+using System.Collections.Generic;
 
-namespace News.Service.Service
+namespace News.Service.Website.Service
 {
     public class WebsiteService : IWebsiteService
     {
+        /// <summary>
+        /// Gets All WebsiteDto objects from the database.
+        /// </summary>
+        /// <returns>List<WebsiteDto></returns>
         public List<WebsiteDto> GetAllWebSites()
         {
-            /*TODO : Fetech websites from Repository*/
+            /*TODO : Fetech website list data from Repository*/
+
             List<WebsiteDto> list = new List<WebsiteDto>();
             list.Add(new WebsiteDto()
             {
