@@ -1,4 +1,5 @@
 ﻿using News.Service.Service.Scraper;
+using News.Service.Website.Service;
 using News.Types.D3Tree;
 using News.Types.DTO;
 using News.Util.D3Tree;
@@ -11,11 +12,12 @@ namespace News.Service.Scraper.Service
 {   
     public class ScraperService : IScraperService
     {
-        //private static InjectScraperServiceDependecies
+        private static IWebsiteService _websiteService;
 
-        public ScraperService()
+        public ScraperService(IWebsiteService websiteService)
         {
             Injections.InjectScraperServiceDependecies();
+            _websiteService = websiteService;
         }
 
              
@@ -24,10 +26,13 @@ namespace News.Service.Scraper.Service
         /// </summary>
         /// <param name="dto">WebsiteDto</param>
         /// <returns>Task<string></returns>
-        public async Task<string> GetHeadlines(WebsiteDto dto)
+        public async Task<string> GetHeadlines(string name)
         {
             try
             {
+                WebsiteDto dto = _websiteService.GetWebSiteByName(name);
+
+                //TODO: Refactor to consume dto
                 D3TreeNode node = await ConstructHeadlineData(dto.Name, dto.CanonicalUrl, dto.HeadLineSelector);
 
                 /*Warp node in an array and send json result*/
@@ -42,8 +47,7 @@ namespace News.Service.Scraper.Service
                 return JsonConvert.SerializeObject("[]");
             }
         }
-
-
+        
 
         /// <summary>
         /// Asynchronoulsy Returns a d3 tree node headlines object for the given url,site name and headline selector.

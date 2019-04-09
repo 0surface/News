@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\banner1.svg" />
+    <Content Remove="wwwroot\images\banner2.svg" />
+    <Content Remove="wwwroot\images\banner3.svg" />
     <Content Remove="wwwroot\ts\d3tree-helper.ts" />
     <Content Remove="wwwroot\ts\news-helper.ts" />
     <Content Remove="wwwroot\ts\news-helper.ts~RF2df36d8f.TMP" />

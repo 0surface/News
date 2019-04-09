@@ -5,6 +5,6 @@ namespace News.Service.Service.Scraper
 {
     public interface IScraperService
     {
-        Task<string> GetHeadlines(WebsiteDto dto);
+        Task<string> GetHeadlines(string name);
     }
 }

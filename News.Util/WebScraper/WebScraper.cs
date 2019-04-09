@@ -31,7 +31,6 @@ namespace News.Util.WebScraper
             {
                 HtmlWeb web = new HtmlWeb();
                 return await web.LoadFromWebAsync(url);
-
             }
             catch (Exception)
             {
@@ -46,7 +45,7 @@ namespace News.Util.WebScraper
             {
                 return htmlDoc.DocumentNode
                                 .SelectNodes(headlineSelector)
-                                .Select(node => WebUtility.HtmlDecode(node.InnerHtml))
+                                .Select(node => node.InnerHtml)
                                 .ToList();
             }
             catch (Exception)
@@ -63,11 +62,11 @@ namespace News.Util.WebScraper
                 if (rawHeadlines == null || rawHeadlines.Count < 1)
                     return rawHeadlines;
 
-                foreach (var item in rawHeadlines)
+                for (int i = 0; i < rawHeadlines.Count; i++)
                 {
-                    item.Replace("&#x27;", "'");
+                    rawHeadlines[i] = WebUtility.HtmlDecode(rawHeadlines[i]);
                 }
-
+                
                 return rawHeadlines;
             }
             catch (Exception)
@@ -90,31 +89,6 @@ namespace News.Util.WebScraper
               {
                   return rawHeadlines;
               }
-          };
-
-
-        //private async Task<List<D3TreeNode>> GetWebData(string url, string headlineSelector)
-        //{
-        //    HtmlWeb web = new HtmlWeb();
-        //    List<D3TreeNode> nodes = new List<D3TreeNode>();
-        //    HtmlDocument doc = await web.LoadFromWebAsync(url);
-
-        //    var headerNames = doc.DocumentNode
-        //        .SelectNodes(headlineSelector)
-        //        .Select(node => node.InnerText.Replace("&#x27;", "'"))
-        //        .ToList();
-
-        //    int limit = 0;
-        //    foreach (var header in headerNames)
-        //    {
-        //        if (limit > 10) return nodes;
-
-        //        nodes.Add(new D3TreeNode(HttpUtility.HtmlDecode(header), ""));
-        //        limit++;
-        //    }
-
-        //    return nodes;
-        //}
-
+          };        
     }
 }

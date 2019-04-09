@@ -1,5 +1,6 @@
 ﻿using News.Types.DTO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace News.Service.Website.Service
 {
@@ -11,7 +12,7 @@ namespace News.Service.Website.Service
         /// <returns>List<WebsiteDto></returns>
         public List<WebsiteDto> GetAllWebSites()
         {
-            /*TODO : Fetech website list data from Repository*/
+            /*TODO : Fetch website list data from Repository*/
 
             List<WebsiteDto> list = new List<WebsiteDto>();
             list.Add(new WebsiteDto()
@@ -52,6 +53,17 @@ namespace News.Service.Website.Service
             });
 
             return list;
+        }
+
+        /// <summary>
+        /// Returns WebsiteDto from database for the provided website name.
+        /// </summary>
+        /// <param name="name">string</param>
+        /// <returns>WebsiteDto</returns>
+        public WebsiteDto GetWebSiteByName(string name)
+        {
+            //TODO : Make Async, Error capture
+            return GetAllWebSites()?.Where(x => x.Name == name).FirstOrDefault();
         }
     }
 }

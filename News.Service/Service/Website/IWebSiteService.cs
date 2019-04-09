@@ -6,5 +6,6 @@ namespace News.Service.Website.Service
     public interface IWebsiteService
     {
         List<WebsiteDto> GetAllWebSites();
+        WebsiteDto GetWebSiteByName(string name);
     }
 }
