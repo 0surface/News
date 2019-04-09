@@ -14,7 +14,9 @@ This an Asp.Net Core 2.0 Web Application
 - D3.v3 library
 - Html Agility Pack (1.11.2)
 
+# Live Deployment
+http://justheadlines.azurewebsites.net/
+
 # Author
-0surface
-SEIFU TOLOSA
+( 0surface ) SEIFU TOLOSA
 
