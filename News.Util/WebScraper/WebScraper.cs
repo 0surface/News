@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace News.Util.WebScraper
@@ -45,7 +46,7 @@ namespace News.Util.WebScraper
             {
                 return htmlDoc.DocumentNode
                                 .SelectNodes(headlineSelector)
-                                .Select(node => node.InnerText.Replace("&#x27;", "'"))
+                                .Select(node => WebUtility.HtmlDecode(node.InnerHtml))
                                 .ToList();
             }
             catch (Exception)
