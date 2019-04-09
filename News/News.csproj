@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\News.Service\News.Service.csproj" />
+    <ProjectReference Include="..\News.Types\News.Types.csproj" />
   </ItemGroup>
 
   <ItemGroup>

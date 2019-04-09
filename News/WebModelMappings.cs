@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using News.Models;
-using News.Service;
+using News.Types.Website;
 
 namespace News
 {
