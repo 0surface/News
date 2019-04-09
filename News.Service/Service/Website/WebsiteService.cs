@@ -32,6 +32,25 @@ namespace News.Service.Website.Service
                 HeadLineSelector = "//p[@class='teaser__subdeck']"
             });
 
+            list.Add(new WebsiteDto()
+            {
+                Id = 3,
+                Name = "The Guardian",
+                CanonicalUrl = "https://www.theguardian.com/uk",
+                LogoImageUrl = "/images/theGuardian.png",
+                HeadLineSelector = "//span[@class='js-headline-text']"
+            });
+
+
+            list.Add(new WebsiteDto()
+            {
+                Id = 4,
+                Name = "The Independent",
+                CanonicalUrl = "https://www.independent.co.uk/",
+                LogoImageUrl = "/images/theindependent.png",
+                HeadLineSelector = "//div[@class='headline']"
+            });
+
             return list;
         }
     }

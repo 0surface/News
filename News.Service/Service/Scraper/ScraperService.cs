@@ -11,6 +11,14 @@ namespace News.Service.Scraper.Service
 {   
     public class ScraperService : IScraperService
     {
+        //private static InjectScraperServiceDependecies
+
+        public ScraperService()
+        {
+            Injections.InjectScraperServiceDependecies();
+        }
+
+             
         /// <summary>
         /// Asynchronoulsy Returns a json string of headlines D3 tree node data for the provided WebsiteDto
         /// </summary>
@@ -65,8 +73,9 @@ namespace News.Service.Scraper.Service
 
                 return node;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var x = ex;
                 return D3TreeNode.Empty();
             }
         }
