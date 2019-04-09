@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace News.Types.Website
+namespace News.Types.DTO
 {
     public class WebsiteDto
     {

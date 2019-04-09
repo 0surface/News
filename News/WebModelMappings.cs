@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using News.Models;
-using News.Types.Website;
+using News.Types.DTO;
 
 namespace News
 {

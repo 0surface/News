@@ -1,5 +1,5 @@
 ﻿using News.Types.D3Tree;
-using News.Types.Website;
+using News.Types.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

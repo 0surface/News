@@ -1,4 +1,4 @@
-﻿using News.Types.Website;
+﻿using News.Types.DTO;
 using System.Collections.Generic;
 
 namespace News.Service.Website.Service

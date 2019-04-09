@@ -1,4 +1,4 @@
-﻿using News.Types.Website;
+﻿using News.Types.DTO;
 using System.Threading.Tasks;
 
 namespace News.Service.Service.Scraper

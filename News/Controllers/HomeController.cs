@@ -1,17 +1,14 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using News.Models;
+using News.Service.Service.Scraper;
+using News.Service.Website.Service;
+using News.Types.DTO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using News.Models;
-using News.Service;
-using News.Service.Scraper.Service;
-using News.Service.Service.Scraper;
-using News.Service.Website.Service;
-using News.Types.Website;
 
 namespace News.Controllers
 {
@@ -44,7 +41,7 @@ namespace News.Controllers
             else
             {
                 return StatusCode((int)HttpStatusCode.NotFound);
-            }           
+            }
         }
 
 
@@ -67,6 +64,6 @@ namespace News.Controllers
         /// <returns>List<WebsiteVM></returns>
         private List<WebsiteVM> GetWebsiteList() =>
             Mapper.Map<List<WebsiteVM>>(_webSiteService.GetAllWebSites());
-        
+
     }
 }

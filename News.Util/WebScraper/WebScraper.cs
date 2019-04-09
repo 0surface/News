@@ -9,8 +9,8 @@ namespace News.Util.WebScraper
     public class WebScraper
     {
         public static Func<string, Task<HtmlDocument>> GetHtmlDocument;
-        public static Func<HtmlDocument, string, Task<List<string>>> GetRawHeadlines;
-        public static Func<List<string>, Task<List<string>>> CleanHeadlines;
+        public static Func<HtmlDocument, string, List<string>> GetRawHeadlines;
+        public static Func<List<string>, List<string>> CleanHeadlines;
         public static Func<List<string>, int, List<string>> GetLimitedHeadlines;
 
         public static int InjectDependencies()
@@ -38,8 +38,8 @@ namespace News.Util.WebScraper
             }
         };
 
-        private static Func<HtmlDocument, string, Task<List<string>>> _GetRawHeadlines()
-            => async (htmlDoc, headlineSelector) =>
+        private static Func<HtmlDocument, string, List<string>> _GetRawHeadlines()
+            => (htmlDoc, headlineSelector) =>
         {
             try
             {
@@ -54,8 +54,8 @@ namespace News.Util.WebScraper
             }
         };
 
-        private static Func<List<string>, Task<List<string>>> _CleanHeadlines()
-            => async (rawHeadlines) =>
+        private static Func<List<string>, List<string>> _CleanHeadlines()
+            => (rawHeadlines) =>
         {
             try
             {

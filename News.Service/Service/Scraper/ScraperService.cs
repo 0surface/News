@@ -1,6 +1,6 @@
 ﻿using News.Service.Service.Scraper;
 using News.Types.D3Tree;
-using News.Types.Website;
+using News.Types.DTO;
 using News.Util.D3Tree;
 using News.Util.WebScraper;
 using Newtonsoft.Json;
@@ -62,9 +62,11 @@ namespace News.Service.Scraper.Service
             try
             {
                 /* Asynchoronusly read webpage and extract news headlines */
+                //TODO: Refactor methods to form a pipeed chain of functions
+
                 var doc = await WebScraper.GetHtmlDocument(url);
-                var rawList = await WebScraper.GetRawHeadlines(doc, headlineSelector);
-                var cleanedList = await WebScraper.CleanHeadlines(rawList);
+                var rawList =  WebScraper.GetRawHeadlines(doc, headlineSelector);
+                var cleanedList = WebScraper.CleanHeadlines(rawList);
                 var list = WebScraper.GetLimitedHeadlines(cleanedList, 12);
 
                 /* Construct D3 tree data from news headline list*/
@@ -73,9 +75,9 @@ namespace News.Service.Scraper.Service
 
                 return node;
             }
-            catch (Exception ex)
-            {
-                var x = ex;
+            catch (Exception )
+            {                
+                //TODO: Propagate error to caller
                 return D3TreeNode.Empty();
             }
         }
