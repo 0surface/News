@@ -7,7 +7,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using News.Models;
 using News.Service;
-using News.Service.Service;
+using News.Service.Scraper.Service;
+using News.Service.Website.Service;
 
 namespace News.Controllers
 {
@@ -29,12 +30,12 @@ namespace News.Controllers
             return View(vm);
         }
 
-        public IActionResult GetHeadlines(string name)
+        public async Task<IActionResult> GetHeadlines(string name)
         {
             WebsiteVM selected = Websites()[name];
             if (selected != null)
             {
-                string result = _scraper.GetHeadlines(Mapper.Map<WebsiteDto>(selected));
+                string result = await _scraper.GetHeadlines(Mapper.Map<WebsiteDto>(selected));
                 return Content(result);
             }
             else

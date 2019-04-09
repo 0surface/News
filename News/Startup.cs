@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using News.Service.Service;
+using News.Service.Scraper.Service;
+using News.Service.Website.Service;
 
 namespace News
 {
@@ -28,7 +24,8 @@ namespace News
             services.AddScoped<IScraper, Scraper>();
             services.AddScoped<IWebsiteService, WebsiteService>();
 
-            AutoMapper.Mapper.Initialize(cfg => {                
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
                 cfg.AddProfile<WebModelMappings>();
             });
 
