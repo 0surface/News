@@ -11,12 +11,12 @@ This an Asp.Net Core 2.0 Web Application
 
 # Main Dependencies 
 - Jquery
-- D3.v3 library
+- D3 library (3.4.5 )
 - Html Agility Pack (1.11.2)
 
 # Live Deployment
 http://justheadlines.azurewebsites.net/
 
 # Author
-( 0surface ) SEIFU TOLOSA
+SEIFU TOLOSA aka 0surface
 
