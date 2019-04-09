@@ -34,7 +34,9 @@
 </div>
 
 <script>
+   
     /*Global variables*/
+    var showLogs = false;
     var treeData =  [
         {
             "name": "Website",
@@ -54,74 +56,78 @@
         height = 500 - margin.top - margin.bottom;
     /*End of Global variables*/
 
-    console.log("org tree data");
-    console.dir(treeData); 
 
     $(function () {
+        getWebData("BBC");
         generateTreeDiagram(treeData);
     });
 
     function generateTreeDiagram(treeData) {
-            // ************** Generate the tree diagram	 *****************
-            var margin = { top: 20, right: 120, bottom: 20, left: 120 },
-                width = 960 - margin.right - margin.left,
-                height = 500 - margin.top - margin.bottom;
+        // ************** Generate the tree diagram	 *****************
+        var margin = { top: 20, right: 120, bottom: 20, left: 120 },
+            width = 960 - margin.right - margin.left,
+            height = 500 - margin.top - margin.bottom;
 
 
-            tree = d3.layout.tree()
-                .size([height, width]);
+        tree = d3.layout.tree()
+            .size([height, width]);
 
-                diagonal = d3.svg.diagonal()
-                .projection(function (d) { return [d.y, d.x]; });
+            diagonal = d3.svg.diagonal()
+            .projection(function (d) { return [d.y, d.x]; });
 
-                svg = d3.select(".treeArea").append("svg")
-                .attr("width", width + margin.right + margin.left)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg = d3.select(".treeArea").append("svg")
+            .attr("width", width + margin.right + margin.left)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            root = treeData[0];
-            root.x0 = height / 2;
-            root.y0 = 0;
+        root = treeData[0];
+        root.x0 = height / 2;
+        root.y0 = 0;
 
-            update(root);
+        update(root);
 
-            d3.select(self.frameElement).style("height", "500px");
-        }
+        d3.select(self.frameElement).style("height", "500px");
+    }
 
-    function getWebData(websiteName) {
-            if (websiteName === '') {
-                websiteName = "BBC";
-            }
-            var data = { name: websiteName };
+    ///Parses data to json and updates the D3 state, hides spinner.
+    function getWebData_successCallback(data) {
+        UtilHelper.log(showLogs, "success fetching data");
+        treeData = JSON.parse(data);
 
-            showSpinner(true);
-            $.ajax({
-                url: "Home/GetHeadlines",
-                type: "POST",
-                data: data,
-                success: (data) => {
-                    console.dir(data);
-                    console.log("success ajax getWebData");
-                    treeData = JSON.parse(data);
-                    root = treeData[0];
-                    root.x0 = height / 2;
-                    root.y0 = 0;
-                    update(root);
-                    console.log(`treedata : ${treeData}`);
-                    showSpinner(false);
-                },
-                error: (err) => {
-                    showSpinner(false);
-                    console.log(`Error ajax getWebData : ${err}`)
-                }
-            });
-        }
+        UtilHelper.log(showLogs, "updating d3 tree data");
+        root = treeData[0];
+        root.x0 = height / 2;
+        root.y0 = 0;
+        update(root);
 
-    function showSpinner(state) {
-            state ? $("#spinner").show() : $("#spinner").hide();
-        }
+        UtilHelper.log(showLogs, "hiding buffering spinner");
+        showSpinner(false);
+    }
 
+    ///Hides Spinner and shows error in the console.
+    function getWebData_failCallback(err) {
+        showSpinner(false);
+        UtilHelper.log(showLogs, `Error ajax getWebData : ${err}`);
+    }
+
+    /// Calls the Controller for headlines for the clicked image's website name
+    /// Executes call back functions after the ajax call
+    /// See (wwwroot/ts modules for more)
+    function getWebData (websiteName) {
+        if (websiteName === '') { websiteName = "BBC"; }        
+
+        showSpinner(true);
+        UtilHelper.AjaxPostwithCallback("Home/GetHeadlines",
+            { name: websiteName },
+            getWebData_successCallback,
+            getWebData_failCallback )
+    }
+    
+    ///Toggles the visibility of the spinner gif container
+    showSpinner = (state) => { state ? $("#spinner").show() : $("#spinner").hide(); }
+        
+    ///Updates the d3 tree diagram with data and redraws diagram.
     function update(source) {
 
         // Compute the new tree layout.

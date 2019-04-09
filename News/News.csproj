@@ -3,7 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>7cc5a491-adae-4884-9a67-54f9a451792d</UserSecretsId>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\ts\news-helper.ts" />
+    <Content Remove="wwwroot\ts\news-helper.ts~RF2df36d8f.TMP" />
+    <Content Remove="wwwroot\ts\util-helper.ts" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="WebModelMappings.cs~RF28cca894.TMP" />
@@ -22,6 +29,11 @@
   <ItemGroup>
     <Folder Include="wwwroot\lib\css\" />
     <Folder Include="wwwroot\lib\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\ts\news-helper.ts" />
+    <TypeScriptCompile Include="wwwroot\ts\util-helper.ts" />
   </ItemGroup>
 
 </Project>
